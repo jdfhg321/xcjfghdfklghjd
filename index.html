@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Казино</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
 <style>
 /* Ваш CSS, как ранее */
@@ -129,60 +130,60 @@ body {
 <div class="buttons-container">
     <div class="content_slot">
         <button class="image-button" id="gameButton">
-            <img src="avatarki/avpiramida.jpg" alt="Перейти" />
+            <img src="piramida.jpg" alt="Перейти" />
         </button>
     </div>
     <div class="content_slot">
         <button class="image-button" id="gameButton2">
-            <img src="avatarki/saper.jpg" alt="Перейти" />
+            <img src="saper.jpg" alt="Перейти" />
         </button>
     </div>
 </div>
 <div class="buttons-container2">
 <div class="content_slot">
     <button class="image-button" id="gameButton3">
-        <img src="avatarki/kubiki.jpg" alt="Перейти" />
+        <img src="kubiki.jpg" alt="Перейти" />
     </button>
 </div>
 <div class="content_slot">
     <button class="image-button" id="gameButton4">
-        <img src="avatarki/bingo.jpg" alt="Перейти" />
+        <img src="bingo.jpg" alt="Перейти" />
     </button>
 </div>
 </div>
 <div class="buttons-container3">
 <div class="content_slot">
     <button class="image-button" id="gameButton5">
-        <img src="avatarki/flappybird.jpg" alt="Перейти" />
+        <img src="flappybird.jpg" alt="Перейти" />
     </button>
 </div>  
 <div class="content_slot">
     <button class="image-button" id="gameButton6">
-        <img src="avatarki/blackjack.jpg" alt="Перейти" />
+        <img src="blackjack.jpg" alt="Перейти" />
     </button>
 </div>
 </div>
 <div class="buttons-container4">
 <div class="content_slot">
     <button class="image-button" id="gameButton7">
-        <img src="avatarki/loterea.jpg" alt="Перейти" />
+        <img src="loterea.jpg" alt="Перейти" />
     </button>
 </div>
 <div class="content_slot">
     <button class="image-button" id="gameButton8">
-        <img src="avatarki/roolet.jpg" alt="Перейти" />
+        <img src="roolet.jpg" alt="Перейти" />
     </button>
 </div>
 </div>
 <div class="buttons-container5">
 <div class="content_slot">
     <button class="image-button" id="gameButton9">
-        <img src="avatarki/krestikinoliki.jpg" alt="Перейти" />
+        <img src="krestikinoliki.jpg" alt="Перейти" />
     </button>
 </div>
 <div class="content_slot">
     <button class="image-button" id="gameButton10">
-        <img src="avatarki/molnya.jpg" alt="Перейти" />
+        <img src="molnya.jpg" alt="Перейти" />
     </button>
 </div>
 </div>
@@ -224,7 +225,12 @@ body {
         const user = tg.initDataUnsafe.user;
         console.log('Обнаружен пользователь:', user);
 
-        // Назначаем обработчик
+        // Удалили всю логику профиля
+        profileButton.onclick = () => {
+            alert('Профиль недоступен.');
+        };
+    } else {
+        // Не авторизован
         profileButton.onclick = () => {
             alert('Пожалуйста, авторизуйтесь в Telegram');
         };
