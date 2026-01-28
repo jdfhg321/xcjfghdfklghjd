@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Казино</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+<style>
+/* Ваш CSS, как ранее */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    color: #fff;
+    background-image: url("2313.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 80px;
+}
+.content_slot {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    position: relative;
+    z-index: 1;
+    margin: 10px 0;
+}
+.buttons-container, .buttons-container2, .buttons-container3, .buttons-container4, .buttons-container5 {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    padding: 20px 0;
+    margin-top: 50px;
+}
+.image-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.image-button img {
+    width: 30vw;
+    max-width: 250px;
+    height: auto;
+    border-radius: 15px;
+}
+@media (max-width: 400px) {
+    .image-button img {
+        width: 35vw;
+    }
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 999;
+    gap: 75px;
+}
+.bottom-nav button {
+    background-color: #610000;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+}
+.bottom-nav button:hover {
+    background-color: #610000a4;
+}
+#betContainer {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+#betBox {
+    background: #000;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 300px;
+    width: 80%;
+}
+#betBox h2 {
+    color: #0ff;
+    margin-bottom: 15px;
+}
+#betInput {
+    font-size: 1.5em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 200px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+#startGameBtn {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    background: #0ff;
+    color: #000;
+    cursor: pointer;
+}
+#startGameBtn:hover {
+    background: #00cccc;
+}
+</style>
+</head>
+<body>
+
+<!-- Кнопки игр -->
+<div class="buttons-container">
+    <div class="content_slot">
+        <button class="image-button" id="gameButton">
+            <img src="avatarki/avpiramida.jpg" alt="Перейти" />
+        </button>
+    </div>
+    <div class="content_slot">
+        <button class="image-button" id="gameButton2">
+            <img src="avatarki/saper.jpg" alt="Перейти" />
+        </button>
+    </div>
+</div>
+<div class="buttons-container2">
+<div class="content_slot">
+    <button class="image-button" id="gameButton3">
+        <img src="avatarki/kubiki.jpg" alt="Перейти" />
+    </button>
+</div>
+<div class="content_slot">
+    <button class="image-button" id="gameButton4">
+        <img src="avatarki/bingo.jpg" alt="Перейти" />
+    </button>
+</div>
+</div>
+<div class="buttons-container3">
+<div class="content_slot">
+    <button class="image-button" id="gameButton5">
+        <img src="avatarki/flappybird.jpg" alt="Перейти" />
+    </button>
+</div>  
+<div class="content_slot">
+    <button class="image-button" id="gameButton6">
+        <img src="avatarki/blackjack.jpg" alt="Перейти" />
+    </button>
+</div>
+</div>
+<div class="buttons-container4">
+<div class="content_slot">
+    <button class="image-button" id="gameButton7">
+        <img src="avatarki/loterea.jpg" alt="Перейти" />
+    </button>
+</div>
+<div class="content_slot">
+    <button class="image-button" id="gameButton8">
+        <img src="avatarki/roolet.jpg" alt="Перейти" />
+    </button>
+</div>
+</div>
+<div class="buttons-container5">
+<div class="content_slot">
+    <button class="image-button" id="gameButton9">
+        <img src="avatarki/krestikinoliki.jpg" alt="Перейти" />
+    </button>
+</div>
+<div class="content_slot">
+    <button class="image-button" id="gameButton10">
+        <img src="avatarki/molnya.jpg" alt="Перейти" />
+    </button>
+</div>
+</div>
+
+<!-- Навигация -->
+<div class="bottom-nav">
+    <button onclick="window.location.href='https://jdfhg321.github.io/gfdjfgk/'">Игры</button>
+    <button id="profileButton">Профиль</button>
+</div>
+
+<!-- Окно ставки -->
+<div id="betContainer">
+<div id="betBox">
+    <h2>Введите сумму ставки</h2>
+    <input type="number" id="betInput" />
+    <br/>
+    <button id="startGameBtn">Начать игру</button>
+</div>
+</div>
+
+<script>
+(async () => {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    // Выводим в консоль, что скрипт запустился
+    console.log('Скрипт запущен');
+
+    // Получение параметров из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+    const nickname = urlParams.get('nickname');
+    const balance = urlParams.get('balance');
+
+    const profileButton = document.getElementById('profileButton');
+
+    // Проверка авторизации Telegram
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        console.log('Обнаружен пользователь:', user);
+
+        // Назначаем обработчик
+        profileButton.onclick = () => {
+            alert('Пожалуйста, авторизуйтесь в Telegram');
+        };
+        console.log('Пользователь не авторизован');
+    }
+
+    // Обработчики переходов к играм
+    document.getElementById('gameButton').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton2').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра2?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton3').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра3?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton4').onclick = () => {
+        const url = `https://jdfhg321.github.io/dfhdsfndkrgjfhgoefhgkl?nickname=${encodeURIComponent(nickname)}&id=${encodeURIComponent(userId)}&balance=${encodeURIComponent(balance)}`;
+        window.location.href = url;
+    };
+    document.getElementById('gameButton5').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра5?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton6').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра6?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton7').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра7?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton8').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра8?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton9').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра9?user_id=' + encodeURIComponent(userId);
+    };
+    document.getElementById('gameButton10').onclick = () => {
+        window.location.href = 'https://ваш-сайт/игра10?user_id=' + encodeURIComponent(userId);
+    };
+
+    // Инициализация Supabase
+    const { createClient } = supabase;
+    const SUPABASE_URL = 'https://vpfomvsrkxykobiziqmc.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk';
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Здесь можно добавить работу с базой данных
+})();
+</script>
+</body>
+</html>
