@@ -214,21 +214,50 @@ body {
 
     // Получение параметров из URL
     const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('id');
-    const nickname = urlParams.get('nickname');
-    const balance = urlParams.get('balance');
+    let userId = urlParams.get('id');
+    let nickname = urlParams.get('nickname');
+    let balance = urlParams.get('balance');
+    if (!userId) {
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        userId = user.id;
+        nickname = user.first_name || user.username || 'Нет никнейма';
+        try {
+            const response = await supabaseClient
+                .from('users')
+                .select('balance')
+                .eq('id', userId)
+                .single();
+            
+            if (!response.error && response.data) {
+                balance = response.data.balance || 0;
+            } else {
+                balance = 0;
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки баланса:', error);
+            balance = 0;
+        }
+    }
+}
 
-    const profileButton = document.getElementById('profileButton');
+window.userData = {
+    userId: userId,
+    nickname: nickname,
+    balance: balance
+};
+
+console.log('Данные пользователя:', window.userData);
 
     // Проверка авторизации Telegram
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const user = tg.initDataUnsafe.user;
         console.log('Обнаружен пользователь:', user);
 
-        // Удалили всю логику профиля
         profileButton.onclick = () => {
-        window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?id=' + encodeURIComponent(userId) + '&nickname=' + encodeURIComponent(nickname) + '&balance=' + encodeURIComponent(balance);
-        };
+        console.log('Переход на профиль с данными:', window.userData);
+        window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?id=' + encodeURIComponent(window.userData.userId) + '&nickname=' + encodeURIComponent(window.userData.nickname) + '&balance=' + encodeURIComponent(window.userData.balance);
+};
     } else {
         // Не авторизован
         profileButton.onclick = () => {
