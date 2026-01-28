@@ -227,7 +227,7 @@ body {
 
         // Удалили всю логику профиля
         profileButton.onclick = () => {
-            alert('Профиль недоступен.');
+        window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?id=' + encodeURIComponent(userId) + '&nickname=' + encodeURIComponent(nickname) + '&balance=' + encodeURIComponent(balance);
         };
     } else {
         // Не авторизован
@@ -248,8 +248,7 @@ body {
         window.location.href = 'https://ваш-сайт/игра3?user_id=' + encodeURIComponent(userId);
     };
     document.getElementById('gameButton4').onclick = () => {
-        const url = `https://jdfhg321.github.io/dfhdsfndkrgjfhgoefhgkl?nickname=${encodeURIComponent(nickname)}&id=${encodeURIComponent(userId)}&balance=${encodeURIComponent(balance)}`;
-        window.location.href = url;
+        window.location.href = 'https://ваш-сайт/игра4?user_id=' + encodeURIComponent(userId);
     };
     document.getElementById('gameButton5').onclick = () => {
         window.location.href = 'https://ваш-сайт/игра5?user_id=' + encodeURIComponent(userId);
