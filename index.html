@@ -7,7 +7,6 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
 <style>
-/* Ваш CSS, как ранее */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -126,7 +125,7 @@ body {
 </head>
 <body>
 
-<!-- Кнопки игр -->
+<!-- Ваши кнопки игр как есть -->
 <div class="buttons-container">
     <div class="content_slot">
         <button class="image-button" id="gameButton">
@@ -209,9 +208,6 @@ body {
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    console.log('Скрипт запущен');
-
-    // Получение userId из URL или через WebApp
     let userId = null;
     const urlParams = new URLSearchParams(window.location.search);
     userId = urlParams.get('id');
@@ -220,17 +216,14 @@ body {
 
     if (!userId && tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id;
-        console.log('Получен User ID из initDataUnsafe:', userId);
     }
 
-    // Инициализация Supabase
     const SUPABASE_URL = 'https://vpfomvsrkxykobiziqmc.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk';
 
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Загружаем профиль и баланс
     async function loadProfile() {
         if (userId) {
             const response = await supabaseClient
@@ -247,21 +240,27 @@ body {
                 balance = 0;
             }
 
-            // Обновляем DOM
             document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
             document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
+
+            if (userId && nickname && (balance !== null)) {
+                document.getElementById('profileButton').href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
+                    'id=' + encodeURIComponent(userId) +
+                    '&nickname=' + encodeURIComponent(nickname) +
+                    '&balance=' + encodeURIComponent(balance);
+            }
         }
     }
 
     if (userId) {
         await loadProfile();
     } else {
-        // Если нет userId, можно оставить дефолтные значения
         document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
+        document.getElementById('profileButton').href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
     }
 
-    // Обработка кнопок перехода к играм
+    // Обработчики переходов к играм
     document.getElementById('gameButton').onclick = () => {
         window.location.href = 'https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId);
     };
@@ -293,9 +292,9 @@ body {
         window.location.href = 'https://ваш-сайт/игра10?user_id=' + encodeURIComponent(userId);
     };
 
-    // Обработчик кнопки "Профиль"
+    // Кнопка профиля
     document.getElementById('profileButton').onclick = () => {
-        window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
+        // ссылка уже установлена
     };
 })();
 </script>
