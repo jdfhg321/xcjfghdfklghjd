@@ -125,7 +125,7 @@ body {
 </head>
 <body>
 
-<!-- Ваши кнопки игр как есть -->
+<!-- Ваши кнопки как есть -->
 <div class="buttons-container">
     <div class="content_slot">
         <button class="image-button" id="gameButton">
@@ -218,9 +218,9 @@ body {
         userId = tg.initDataUnsafe.user.id;
     }
 
+    // Инициализация Supabase (замените на свои ключи или удалите, если не нужно)
     const SUPABASE_URL = 'https://vpfomvsrkxykobiziqmc.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk';
-
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk'; // вставьте свой ключ
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -243,21 +243,25 @@ body {
             document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
             document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
 
-            if (userId && nickname && (balance !== null)) {
-                document.getElementById('profileButton').href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
+            // Формируем ссылку профиля с параметрами
+            document.getElementById('profileButton').onclick = () => {
+                window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
                     'id=' + encodeURIComponent(userId) +
                     '&nickname=' + encodeURIComponent(nickname) +
                     '&balance=' + encodeURIComponent(balance);
-            }
+            };
         }
     }
 
     if (userId) {
         await loadProfile();
     } else {
+        // Нет userId, выставляем дефолт
         document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
-        document.getElementById('profileButton').href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
+        document.getElementById('profileButton').onclick = () => {
+            window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
+        };
     }
 
     // Обработчики переходов к играм
@@ -292,10 +296,6 @@ body {
         window.location.href = 'https://ваш-сайт/игра10?user_id=' + encodeURIComponent(userId);
     };
 
-    // Кнопка профиля
-    document.getElementById('profileButton').onclick = () => {
-        // ссылка уже установлена
-    };
 })();
 </script>
 </body>
