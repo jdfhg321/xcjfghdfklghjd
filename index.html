@@ -121,6 +121,18 @@ body {
 #startGameBtn:hover {
     background: #00cccc;
 }
+#nickname {
+    color: #fff;
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 10px;
+}
+#balance-display {
+    color: #fff;
+    font-size: 1.8em;
+    text-align: center;
+    margin-top: 10px;
+}
 </style>
 </head>
 <body>
@@ -193,6 +205,12 @@ body {
     <button id="profileButton">Профиль</button>
 </div>
 
+<!-- Информация о пользователе -->
+<div style="margin:20px; text-align:center;">
+    <div id="nickname">Никнейм: <div style="display:inline-block;">Нет никнейма</div></div>
+    <div id="balance-display">💰 Ваш баланс: <span style="font-size:24px;">0₽</span></div>
+</div>
+
 <!-- Окно ставки -->
 <div id="betContainer">
 <div id="betBox">
@@ -211,18 +229,20 @@ body {
     let userId = null;
     const urlParams = new URLSearchParams(window.location.search);
     userId = urlParams.get('id');
-    let nickname = null;
-    let balance = null;
 
+    // Получение данных из WebApp, если есть
     if (!userId && tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id;
     }
 
-    // Инициализация Supabase (замените на свои ключи или удалите, если не нужно)
+    // Инициализация Supabase (заполните своими ключами)
     const SUPABASE_URL = 'https://vpfomvsrkxykobiziqmc.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk'; // вставьте свой ключ
+    const SUPABASE_KEY = 'sb_publishable_FeiqB_Sd7gfrukWWgQLjnw_rwxGTPJl'; // замените на свой
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let nickname = 'Нет никнейма';
+    let balance = 0;
 
     async function loadProfile() {
         if (userId) {
@@ -235,28 +255,26 @@ body {
             if (!response.error && response.data) {
                 nickname = response.data.nickname || 'Нет никнейма';
                 balance = response.data.balance || 0;
-            } else {
-                nickname = 'Нет никнейма';
-                balance = 0;
             }
-
-            document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
-            document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
-
-            // Формируем ссылку профиля с параметрами
-            document.getElementById('profileButton').onclick = () => {
-                window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
-                    'id=' + encodeURIComponent(userId) +
-                    '&nickname=' + encodeURIComponent(nickname) +
-                    '&balance=' + encodeURIComponent(balance);
-            };
         }
+        // Обновление отображения
+        document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
+        document.getElementById('balance-display').innerHTML = 
+            '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
+
+        // Обработка кнопки профиля
+        document.getElementById('profileButton').onclick = () => {
+            window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
+                'id=' + encodeURIComponent(userId) +
+                '&nickname=' + encodeURIComponent(nickname) +
+                '&balance=' + encodeURIComponent(balance);
+        };
     }
 
     if (userId) {
         await loadProfile();
     } else {
-        // Нет userId, выставляем дефолт
+        // Нет userId, показываем "нет никнейма"
         document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
         document.getElementById('profileButton').onclick = () => {
@@ -264,7 +282,7 @@ body {
         };
     }
 
-    // Обработчики переходов к играм
+    // Обработчики для игр
     document.getElementById('gameButton').onclick = () => {
         window.location.href = 'https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId);
     };
