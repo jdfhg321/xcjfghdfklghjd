@@ -137,7 +137,7 @@ body {
 </head>
 <body>
 
-<!-- Ваши кнопки как есть -->
+<!-- Кнопки и контент без изменений -->
 <div class="buttons-container">
     <div class="content_slot">
         <button class="image-button" id="gameButton">
@@ -264,10 +264,15 @@ body {
 
         // Обработка кнопки профиля
         document.getElementById('profileButton').onclick = () => {
-            window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
-                'id=' + encodeURIComponent(userId) +
-                '&nickname=' + encodeURIComponent(nickname) +
-                '&balance=' + encodeURIComponent(balance);
+            console.log('Переход по профилю, userId:', userId);
+            if (userId) {
+                window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
+                    'id=' + encodeURIComponent(userId) +
+                    '&nickname=' + encodeURIComponent(nickname) +
+                    '&balance=' + encodeURIComponent(balance);
+            } else {
+                alert('Пользователь не авторизован или ID не получен');
+            }
         };
     }
 
@@ -278,6 +283,7 @@ body {
         document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
         document.getElementById('profileButton').onclick = () => {
+            console.log('Переход без userId');
             window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
         };
     }
@@ -313,7 +319,6 @@ body {
     document.getElementById('gameButton10').onclick = () => {
         window.location.href = 'https://ваш-сайт/игра10?user_id=' + encodeURIComponent(userId);
     };
-
 })();
 </script>
 </body>
