@@ -168,19 +168,35 @@ body {
     const tg = window.Telegram.WebApp;
     tg.ready();
 
+    // Глобальные переменные
     let userId = null;
-    const urlParams = new URLSearchParams(window.location.search);
-    userId = urlParams.get('id');
     let nickname = null;
     let balance = null;
+
+    // Назначаем обработчик сразу
+    document.getElementById('profileButton').addEventListener('click', () => {
+        if (userId && nickname && balance !== null) {
+            window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
+                'id=' + encodeURIComponent(userId) +
+                '&nickname=' + encodeURIComponent(nickname) +
+                '&balance=' + encodeURIComponent(balance);
+        } else {
+            alert('Данные профиля не загружены.');
+        }
+    });
+
+    // Получение userId из URL или Telegram
+    const urlParams = new URLSearchParams(window.location.search);
+    userId = urlParams.get('id');
 
     if (!userId && tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id;
     }
 
-    // Инициализация Supabase (замените свои ключи или удалите, если не нужно)
+    // Инициализация Supabase
     const SUPABASE_URL = 'https://vpfomvsrkxykobiziqmc.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk'; // вставьте свой ключ
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZm9tdnNya3h5a29iaXppcW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NzQ1ODUsImV4cCI6MjA4NDM1MDU4NX0.7bey1hQpATp9e6jxAf7qMUwM9blpTsg_hyDT94qoQLk'; 
+
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -200,15 +216,9 @@ body {
                 balance = 0;
             }
 
+            // Обновляем отображение
             document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
             document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
-
-            document.getElementById('profileButton').onclick = () => {
-                window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
-                    'id=' + encodeURIComponent(userId) +
-                    '&nickname=' + encodeURIComponent(nickname) +
-                    '&balance=' + encodeURIComponent(balance);
-            };
         }
     }
 
@@ -217,9 +227,6 @@ body {
     } else {
         document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
-        document.getElementById('profileButton').onclick = () => {
-            window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/';
-        };
     }
 
     // Обработчики переходов к играм
