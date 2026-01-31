@@ -195,14 +195,13 @@ body {
 
     // Назначаем обработчик кнопки «Профиль» так, чтобы она переходила на URL с параметрами
     document.getElementById('profileButton').onclick = () => {
-        if (userId && nickname && balance !== null) {
-            window.location.href = 'https://jdfhg321.github.io/gfdjfgk/?id=' + encodeURIComponent(userId) +
-                '&nickname=' + encodeURIComponent(nickname) +
-                '&balance=' + encodeURIComponent(balance);
-        } else {
-            alert('Нет данных профиля');
-        }
-    };
+    if (userId && nickname && balance !== null) {
+        // Просто показываем данные в alert, чтобы убедиться, что они есть
+        alert(`Профиль:\nID: ${userId}\nНик: ${nickname}\nБаланс: ${balance}₽`);
+    } else {
+        alert('Данные профиля не были получены из URL.');
+    }
+        };
 
     // Обработчики игр
     document.getElementById('gameButton').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
