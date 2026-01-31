@@ -168,64 +168,41 @@ body {
     const tg = window.Telegram.WebApp;
     tg.ready();
 
-    let userId = null;
-    let nickname = null;
-    let balance = null;
+    // Получаем параметры из URL
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get('id');
+    const nickname = params.get('nickname');
+    const balance = params.get('balance');
 
-    // Получаем userId из URL или tg.initDataUnsafe
-    const urlParams = new URLSearchParams(window.location.search);
-    userId = urlParams.get('id');
-
-    if (!userId && tg.initDataUnsafe?.user) {
-        userId = tg.initDataUnsafe.user.id;
+    // Обновляем DOM
+    if (userId) {
+        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: ' + userId;
+    } else {
+        document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: не указан';
     }
 
-    // Функция загрузки профиля
-    async function loadProfile() {
-        if (userId) {
-            // Обновляем ID
-            document.querySelector('#id div:nth-child(2)').textContent = 'ID TG: ' + userId;
+    if (nickname) {
+        document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
+    } else {
+        document.querySelector('#nickname div:nth-child(2)').textContent = 'Нет никнейма';
+    }
 
-            // Загружаем баланс и никнейм
-            try {
-                const response = await supabaseClient
-                    .from('users')
-                    .select('balance,nickname')
-                    .eq('id', userId)
-                    .single();
+    if (balance !== null) {
+        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
+    } else {
+        document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
+    }
 
-                if (!response.error && response.data) {
-                    nickname = response.data.nickname || 'Нет никнейма';
-                    balance = response.data.balance || 0;
-                } else {
-                    nickname = 'Нет никнейма';
-                    balance = 0;
-                }
-
-                // Обновляем отображение
-                document.querySelector('#nickname div:nth-child(2)').textContent = nickname;
-                document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">' + balance + '₽</span>';
-
-                // Назначаем обработчик после загрузки данных
-                document.getElementById('profileButton').onclick = () => {
-                    if (userId && nickname && balance !== null) {
-                        window.location.href = 'https://jdfhg321.github.io/shjdgjkdfh2dfhk/?' +
-                            'id=' + encodeURIComponent(userId) +
-                            '&nickname=' + encodeURIComponent(nickname) +
-                            '&balance=' + encodeURIComponent(balance);
-                    } else {
-                        alert('Данные профиля не загружены.');
-                    }
-                };
-            } catch (e) {
-                alert('Ошибка загрузки данных профиля.');
-            }
+    // Назначаем обработчик кнопки «Профиль» так, чтобы она переходила на URL с параметрами
+    document.getElementById('profileButton').onclick = () => {
+        if (userId && nickname && balance !== null) {
+            window.location.href = 'https://jdfhg321.github.io/gfdjfgk/?id=' + encodeURIComponent(userId) +
+                '&nickname=' + encodeURIComponent(nickname) +
+                '&balance=' + encodeURIComponent(balance);
         } else {
-            alert("Не удалось определить ID");
+            alert('Нет данных профиля');
         }
-    }
-
-    await loadProfile();
+    };
 
     // Обработчики игр
     document.getElementById('gameButton').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
