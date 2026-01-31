@@ -181,7 +181,7 @@ body {
                 '&nickname=' + encodeURIComponent(nickname) +
                 '&balance=' + encodeURIComponent(balance);
         } else {
-            alert('Данные профиля не загружены.');
+            alert('Данные профиля не загружены или отсутствуют.');
         }
     });
 
@@ -229,7 +229,7 @@ body {
         document.getElementById('balance-display').innerHTML = '💰 Ваш баланс: <span style="font-size:24px;">0₽</span>';
     }
 
-    // Обработчики переходов к играм
+    // Переходы к играм
     document.getElementById('gameButton').onclick = () => { window.location.href='https://ваш-сайт/игра1?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton2').onclick = () => { window.location.href='https://ваш-сайт/игра2?user_id=' + encodeURIComponent(userId); };
     document.getElementById('gameButton3').onclick = () => { window.location.href='https://ваш-сайт/игра3?user_id=' + encodeURIComponent(userId); };
